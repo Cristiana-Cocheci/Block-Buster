@@ -7,7 +7,7 @@ function App() {
   return (
     <div className='App'>
       <div>
-        <Board rows={8} cols={8} size="5vw" defaultScore={10}/>
+        <Board rows={10} cols={10} size="5vh" defaultScore={10}/>
       </div>
     </div>
   )

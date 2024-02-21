@@ -1,5 +1,6 @@
 .Tiles{
-  height: 5vw;
-  width: 5vw;
+  height: 5vh;
+  width: 5vh;
   border: 3px solid #d6ccc2;
+  cursor: pointer;
 }
