@@ -14,13 +14,13 @@ class Tile extends React.Component <TileProps> {
   // const [backgroundColor, setBackgroundColor] = useState(props.color);
   // const [isHovered, setIsHovered] = useState(false);
 
-  handleMouseEnter = () => {
-    this.setState({color: "lightblue"});
-  };
+  // handleMouseEnter = () => {
+  //   this.setState({color: "lightblue"});
+  // };
 
-  handleMouseLeave = () => {
-    this.setState({color: this.props.color});
-  };
+  // handleMouseLeave = () => {
+  //   this.setState({color: this.props.color});
+  // };
   handleOnClick = () => {
     this.props.onClick();
   };
@@ -29,10 +29,10 @@ class Tile extends React.Component <TileProps> {
     return (
     <div
       className='Tiles'
-      onMouseEnter={this.handleMouseEnter}
-      onMouseLeave={this.handleMouseLeave}
+      // onMouseEnter={this.handleMouseEnter}
+      // onMouseLeave={this.handleMouseLeave}
       onClick={this.handleOnClick}
-      style={{ backgroundColor: this.state.color }}
+      style={{ backgroundColor: this.props.color }}
     ></div>
   );}
 }

@@ -20,22 +20,27 @@ class Board extends React.Component<BoardProps>{
   changeBlock = (newValue: string) => {
     this.setState({ selectedBlock: newValue });
   };
+  is_free(indexes: number[]){
+    const { blocks } = this.state;
+    let b = [... blocks];
+    for(let i=0;i<indexes.length;i++){
+      if(b[indexes[i]]){
+        return false;
+      }
+    }
+    return true;
+  }
 
-  colIsFull(index: number, x: boolean[]) {
-    const startIndex = Math.floor(index / this.props.cols);
-    const endIndex = startIndex + this.props.cols -1;
-  
-    for (let i = startIndex; i < endIndex; i++) {
-      //console.log(i);
+  rowIsFull(row: number, x: boolean[]) {
+    for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
+      // console.log(i);
       if (!x[i]) {
         return false;
       }
     }
     return true;
   }
-  rowIsFull(index: number, x: boolean[]) {
-    index--;
-    const col = index % this.props.rows;
+  colIsFull(col: number, x: boolean[]) {
     
     for (let i = 0; i < this.props.rows; i++) {
       let aux = i* this.props.rows+ col;
@@ -47,30 +52,53 @@ class Board extends React.Component<BoardProps>{
     return true;
   }
   
-
-  is_free(indexes: number[]){
-    const { blocks } = this.state;
-    let b = [... blocks];
-    for(let i=0;i<indexes.length;i++){
-      if(b[indexes[i]]){
-        return false;
+  callForRows(x: boolean[], y: number[]){
+    for(let i=0;i<y.length;i++){
+      if(this.rowIsFull(y[i],x)){
+        console.log(y[i], "rowIsfull");
       }
     }
-    return true;
   }
-  callforrow(x: boolean[]){
-    if(this.colIsFull(1, x)){
-      console.log("full 1");
+  emptyCol(col: number){console.log("inempty");
+    const { colors, blocks } = this.state;
+    let newColors = [...colors];
+    let newBlocks = [... blocks];
+    for (let i = 0; i < this.props.rows; i++) {
+      let aux = i* this.props.rows+ col;
+      //console.log(aux);
+      newColors[aux]="black";
+      newBlocks[aux]=false;
     }
-    if(this.rowIsFull(1,x))
-      console.log("COLL");
+    this.setState({ colors: newColors, blocks: newBlocks });
+  }
+  callForCols(x: boolean[], y: number[]){
+    // const { colors, blocks } = this.state;
+    // let newColors = [...colors];
+    // let newBlocks = [... blocks];
+    for(let i=0;i<y.length;i++){
+      if(this.colIsFull(y[i],x)){
+        console.log(y[i], "colIsfull");
+        // this.emptyCol(y[i]);
+        // let col = y[i];
+        // for (let j = 0; j < this.props.rows; j++) {
+        //   let aux = j* this.props.rows+ col;
+        //   //console.log(aux);
+        //   newColors[aux]="black";
+        //   newBlocks[aux]=false;
+        // }
+      }
+    }
+    // this.setState({ colors: newColors, blocks: newBlocks });
+
   }
   handleTileClick(index: number){
-    const mycolors = ["#9b2226", "#ae2012", "#bb3e03",  "#b5179e", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#560bad", "#ca6702"];
+    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#560bad", "#b5179e"];
     
     const { colors, blocks, selectedBlock } = this.state;
     let newColors = [...colors];
     let newBlocks = [... blocks];
+    let possibleWinRows : number[] = [];
+    let possibleWinCols : number[] =[];
     switch(selectedBlock){
       case 'none': newColors =  [...colors]; break;
       case 'square' : (()=>{
@@ -78,6 +106,10 @@ class Board extends React.Component<BoardProps>{
                       if(index%this.props.cols<this.props.cols-1 
                         && index/this.props.rows<this.props.rows-1
                         && this.is_free(indexes)){
+                          possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
+                          possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
+                          console.log(possibleWinCols);
+                          console.log(possibleWinRows);
                         for(let i=0;i<indexes.length;i++){
                           newColors[indexes[i]]=mycolors[0];
                           newBlocks[indexes[i]] = true;
@@ -159,7 +191,8 @@ class Board extends React.Component<BoardProps>{
     this.setState({ colors: newColors, blocks: newBlocks });
     
     this.generateBoard();
-    this.callforrow(newBlocks);
+    this.callForRows(newBlocks, possibleWinRows);
+    this.callForCols(newBlocks, possibleWinCols);
     
   }
   generateBoard = () => {
@@ -188,8 +221,8 @@ class Board extends React.Component<BoardProps>{
       
       <div className='option1'>{<Blocks blockType="Square" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
       <div className='option2'>{<Blocks blockType="VBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option4'>{<Blocks blockType="VLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
       <div className='option3'>{<Blocks blockType="LBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
+      <div className='option4'>{<Blocks blockType="VLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
       <div className='option5'>{<Blocks blockType="TBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       <div className='option6'>{<Blocks blockType="HLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       <div className='option7'>{<Blocks blockType="VBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
