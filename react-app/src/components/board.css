@@ -1,0 +1,27 @@
+.wholeboard {
+  display: grid;
+  grid-template-areas:
+  'board board board board right1'
+  'board board board board right2'
+  'board board board board right3'
+  'board board board board right4'
+  'board board board board right5';
+  grid-gap: 10px;
+  background-color: #0a1823;
+  padding: 10px;
+}
+.playboard{ grid-area: board;}
+.option1{grid-area: right1;}
+.option2{grid-area: right2;}
+.option3{grid-area: right3;}
+.option4{grid-area: right4;}
+.option5{grid-area: right5;}
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+.cell {
+  width: 5vw;
+  height: 5vw;
+} 
