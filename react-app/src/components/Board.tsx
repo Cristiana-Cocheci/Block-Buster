@@ -1,12 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Tile from './Tile'
 import './board.css'
 import Blocks from './Blocks'
 
 interface BoardProps {
   rows: number;
-  cols: number; // Define the type of cols prop
+  cols: number; 
   size: string;
+  defaultScore: number;
 }
 
 
@@ -14,7 +15,8 @@ class Board extends React.Component<BoardProps>{
   state = {
     colors: Array.from({ length: this.props.rows * this.props.cols }, () => "#edede9"),
     blocks: Array.from({ length: this.props.rows * this.props.cols }, ()=>false),
-    selectedBlock: 'none'
+    selectedBlock: 'none',
+    score: 0
   };
 
   changeBlock = (newValue: string) => {
@@ -52,49 +54,47 @@ class Board extends React.Component<BoardProps>{
     return true;
   }
   
-  callForRows(x: boolean[], y: number[]){
+  callForRows(newBlocks: boolean[], newColors: string[],  y: number[]){
+    let cntScor=0;
     for(let i=0;i<y.length;i++){
-      if(this.rowIsFull(y[i],x)){
+      if(this.rowIsFull(y[i], newBlocks)){
         console.log(y[i], "rowIsfull");
+        //empty the row
+        let row = y[i];
+        cntScor+= this.props.defaultScore;
+        for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
+          newColors[i]="#edede9";
+          newBlocks[i]=false;
+          
+        }
       }
     }
+    return cntScor;
   }
-  emptyCol(col: number){console.log("inempty");
-    const { colors, blocks } = this.state;
-    let newColors = [...colors];
-    let newBlocks = [... blocks];
-    for (let i = 0; i < this.props.rows; i++) {
-      let aux = i* this.props.rows+ col;
-      //console.log(aux);
-      newColors[aux]="black";
-      newBlocks[aux]=false;
-    }
-    this.setState({ colors: newColors, blocks: newBlocks });
-  }
-  callForCols(x: boolean[], y: number[]){
-    // const { colors, blocks } = this.state;
-    // let newColors = [...colors];
-    // let newBlocks = [... blocks];
+  
+  callForCols(newBlocks: boolean[], newColors: string[],  y: number[]){
+    let cntScor=0;
     for(let i=0;i<y.length;i++){
-      if(this.colIsFull(y[i],x)){
+      if(this.colIsFull(y[i], newBlocks)){
         console.log(y[i], "colIsfull");
-        // this.emptyCol(y[i]);
-        // let col = y[i];
-        // for (let j = 0; j < this.props.rows; j++) {
-        //   let aux = j* this.props.rows+ col;
-        //   //console.log(aux);
-        //   newColors[aux]="black";
-        //   newBlocks[aux]=false;
-        // }
+        //empty the column
+        let col = y[i];
+        cntScor+= this.props.defaultScore;
+        for (let j = 0; j < this.props.rows; j++) {
+          let aux = j* this.props.rows+ col;
+          //console.log(aux);
+          newColors[aux]="#edede9";
+          newBlocks[aux]=false;
+        }
       }
     }
-    // this.setState({ colors: newColors, blocks: newBlocks });
+    return cntScor;
 
   }
   handleTileClick(index: number){
     const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#560bad", "#b5179e"];
     
-    const { colors, blocks, selectedBlock } = this.state;
+    const { colors, blocks, selectedBlock, score } = this.state;
     let newColors = [...colors];
     let newBlocks = [... blocks];
     let possibleWinRows : number[] = [];
@@ -121,6 +121,10 @@ class Board extends React.Component<BoardProps>{
         if(index%this.props.cols<this.props.cols-1 
           && index/this.props.rows<this.props.rows-1 
           && this.is_free(indexes)){
+            possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
+            possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
+            console.log(possibleWinCols);
+            console.log(possibleWinRows);
           for(let i=0;i<indexes.length;i++){
             newColors[indexes[i]]=mycolors[2];
             newBlocks[indexes[i]] = true;
@@ -131,6 +135,10 @@ class Board extends React.Component<BoardProps>{
             if(index%this.props.cols<this.props.cols
               && index/this.props.rows<this.props.rows-1 
               && this.is_free(indexes)){
+                possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
+                possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
+                console.log(possibleWinCols);
+                console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[6];
                 newBlocks[indexes[i]] = true;
@@ -141,6 +149,10 @@ class Board extends React.Component<BoardProps>{
             if(index%this.props.cols<this.props.cols-2 && 
                 index/this.props.rows<this.props.rows-1 &&
                this.is_free(indexes)){
+                possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
+                possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
+                console.log(possibleWinCols);
+                console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[1];
                 newBlocks[indexes[i]] = true;
@@ -151,6 +163,8 @@ class Board extends React.Component<BoardProps>{
         const indexes = [index, index+1, index+2, index+3, index+4];
         if(index%this.props.cols<this.props.cols-4 
           && this.is_free(indexes)){
+            possibleWinRows = [Math.floor(index/ this.props.cols)];
+            possibleWinCols = [index%this.props.rows,(index+1)% this.props.rows, (index+2)% this.props.rows,(index+3)% this.props.rows, (index+4)% this.props.rows];
           for(let i=0;i<indexes.length;i++){
             newColors[indexes[i]]=mycolors[3];
             newBlocks[indexes[i]] = true;
@@ -160,6 +174,9 @@ class Board extends React.Component<BoardProps>{
             const indexes = [index, index+this.props.cols*4, index+this.props.cols*3, index+this.props.cols*2, index+this.props.cols];
             if(index/this.props.rows<this.props.rows-4 
               && this.is_free(indexes)){
+                possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols),Math.floor((index+2*this.props.cols)/ this.props.cols),Math.floor((index+3*this.props.cols)/ this.props.cols),Math.floor((index+4*this.props.cols)/ this.props.cols)];
+                possibleWinCols = [index%this.props.rows];
+                console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[5];
                 newBlocks[indexes[i]] = true;
@@ -171,6 +188,10 @@ class Board extends React.Component<BoardProps>{
             index/this.props.rows<this.props.rows-1 &&
             index/this.props.rows>0 &&
             this.is_free(indexes)){
+              possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
+              possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
+              console.log(possibleWinCols);
+              console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[4];
                 newBlocks[indexes[i]] = true;
@@ -182,17 +203,24 @@ class Board extends React.Component<BoardProps>{
                 index/this.props.rows<this.props.rows-1 &&
                 index/this.props.rows>0 &&
                     this.is_free(indexes)){
+                      possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
+                      possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
+                      console.log(possibleWinCols);
+                      console.log(possibleWinRows);
                       for(let i=0;i<indexes.length;i++){
                         newColors[indexes[i]]=mycolors[7];
                         newBlocks[indexes[i]] = true;
                       }
           }})(); break;
     }
-    this.setState({ colors: newColors, blocks: newBlocks });
     
     this.generateBoard();
-    this.callForRows(newBlocks, possibleWinRows);
-    this.callForCols(newBlocks, possibleWinCols);
+
+    let newScore = score;
+    newScore += this.callForRows(newBlocks, newColors, possibleWinRows);
+    newScore += this.callForCols(newBlocks, newColors, possibleWinCols);
+    console.log(newScore);
+    this.setState({ colors: newColors, blocks: newBlocks, score:newScore });
     
   }
   generateBoard = () => {
@@ -227,7 +255,8 @@ class Board extends React.Component<BoardProps>{
       <div className='option6'>{<Blocks blockType="HLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       <div className='option7'>{<Blocks blockType="VBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       <div className='option8'>{<Blocks blockType="TBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-
+      
+      <div className='SCORE'>{this.state.score}</div>
   </div>
   )
   }
