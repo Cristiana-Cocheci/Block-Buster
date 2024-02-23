@@ -1,11 +1,11 @@
 .wholeboard {
   display: grid;
   grid-template-areas:
-  'board board board board right1'
-  'board board board board right2'
-  'board board board board right3'
-  'board board board board right4'
-  'right5 right6 right7 right8 score';
+  'right1 board board score'
+  'right2 board board right11'
+  'right3 board board right10'
+  'right4 board board right9'
+  'right5 right6 right7 right8';
   grid-gap: 10px;
   background-color: #0a1823;
   padding: 10px;
@@ -19,9 +19,16 @@
 .option6{grid-area: right6;}
 .option7{grid-area: right7;}
 .option8{grid-area: right8;}
+.option9{grid-area: right9;}
+.option10{grid-area: right10;}
+.option11{grid-area: right11;}
+
 .SCORE{
-  grid-area: scor;
-  background-color: antiquewhite;
+  grid-area: score;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 40px;
+  font-style: oblique;
+  color:#f1dbd8;
 }
 
 .row {

@@ -6,6 +6,7 @@ import Board from './components/Board'
 function App() {
   return (
     <div className='App'>
+      <div>Hello world!</div>
       <div>
         <Board rows={10} cols={10} size="5vh" defaultScore={10}/>
       </div>

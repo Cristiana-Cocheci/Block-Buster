@@ -92,7 +92,7 @@ class Board extends React.Component<BoardProps>{
 
   }
   handleTileClick(index: number){
-    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#560bad", "#b5179e"];
+    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#7b2cbf", "#b5179e", "#ef476f"];
     
     const { colors, blocks, selectedBlock, score } = this.state;
     let newColors = [...colors];
@@ -116,6 +116,52 @@ class Board extends React.Component<BoardProps>{
                         }
                         
                       }})(); break;
+      case 'BigSquare' : (()=>{
+                        const indexes = [index, index+1, index+2, index+this.props.cols, index+this.props.cols+1, index+this.props.cols+2
+                        , index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
+                        if(index%this.props.cols<this.props.cols-1 
+                          && index/this.props.rows<this.props.rows-1
+                          && this.is_free(indexes)){
+                            possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
+                            possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
+                            console.log(possibleWinCols);
+                            console.log(possibleWinRows);
+                          for(let i=0;i<indexes.length;i++){
+                            newColors[indexes[i]]=mycolors[8];
+                            newBlocks[indexes[i]] = true;
+                          }
+                          
+                        }})(); break;
+      case 'BigV' : (()=>{
+                          const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols-1, index+2*this.props.cols-2];
+                          if(index%this.props.cols<this.props.cols-1 
+                            && index/this.props.rows<this.props.rows-1
+                            && this.is_free(indexes)){
+                              possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
+                              possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
+                              console.log(possibleWinCols);
+                              console.log(possibleWinRows);
+                            for(let i=0;i<indexes.length;i++){
+                              newColors[indexes[i]]=mycolors[9];
+                              newBlocks[indexes[i]] = true;
+                            }
+                            
+                          }})(); break;
+      case 'BigV2' : (()=>{
+                            const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
+                            if(index%this.props.cols<this.props.cols-1 
+                              && index/this.props.rows<this.props.rows-1
+                              && this.is_free(indexes)){
+                                possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
+                                possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
+                                console.log(possibleWinCols);
+                                console.log(possibleWinRows);
+                              for(let i=0;i<indexes.length;i++){
+                                newColors[indexes[i]]=mycolors[10];
+                                newBlocks[indexes[i]] = true;
+                              }
+                              
+                            }})(); break;
       case 'VBlock': (()=>{
         const indexes = [index, index+1, index+this.props.cols];
         if(index%this.props.cols<this.props.cols-1 
@@ -255,8 +301,11 @@ class Board extends React.Component<BoardProps>{
       <div className='option6'>{<Blocks blockType="HLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       <div className='option7'>{<Blocks blockType="VBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       <div className='option8'>{<Blocks blockType="TBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='option9'>{<Blocks blockType="BigSquare" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='option10'>{<Blocks blockType="BigV" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='option11'>{<Blocks blockType="BigV2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       
-      <div className='SCORE'>{this.state.score}</div>
+      <div className='SCORE'>Score: {this.state.score}</div>
   </div>
   )
   }
