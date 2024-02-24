@@ -294,17 +294,17 @@ class Board extends React.Component<BoardProps>{
       {this.generateBoard()}
       </div>
       
-      <div className='option1'>{<Blocks blockType="Square" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option2'>{<Blocks blockType="VBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option3'>{<Blocks blockType="LBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option4'>{<Blocks blockType="VLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option5'>{<Blocks blockType="TBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option6'>{<Blocks blockType="HLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option7'>{<Blocks blockType="VBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option8'>{<Blocks blockType="TBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option9'>{<Blocks blockType="BigSquare" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option10'>{<Blocks blockType="BigV" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option11'>{<Blocks blockType="BigV2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option1'>{<Blocks blockType="Square" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
+      <div className='options' id='option2'>{<Blocks blockType="VBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
+      <div className='options' id='option3'>{<Blocks blockType="LBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
+      <div className='options' id='option4'>{<Blocks blockType="VLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
+      <div className='options' id='option5'>{<Blocks blockType="TBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option6'>{<Blocks blockType="HLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option7'>{<Blocks blockType="VBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option8'>{<Blocks blockType="TBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option9'>{<Blocks blockType="BigSquare" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option10'>{<Blocks blockType="BigV" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      <div className='options' id='option11'>{<Blocks blockType="BigV2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
       
       <div className='SCORE'>Score: {this.state.score}</div>
   </div>

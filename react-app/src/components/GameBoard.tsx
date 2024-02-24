@@ -347,7 +347,7 @@ class GameBoard extends React.Component<GameBoardProps>{
     for(let i=0;i<no;i++){
       let index = Math.floor((Math.random()*100))%arr.length;
       let cn = "option" + i.toString();
-      blcs.push( <div className={cn}>{<Blocks blockType={arr[index]} size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>);
+      blcs.push( <div className="options" id={cn} key={cn}>{<Blocks blockType={arr[index]} size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>);
       names.push(arr[index]);
     }
     const pair ={blocks: blcs, names: names};

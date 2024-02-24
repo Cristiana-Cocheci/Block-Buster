@@ -28,18 +28,21 @@
   }
 }
 .playboard{ grid-area: board;}
-.option1{grid-area: right1;}
-.option2{grid-area: right2;}
-.option3{grid-area: right3;}
-.option4{grid-area: right4;}
-.option5{grid-area: right5;}
-.option6{grid-area: right6;}
-.option7{grid-area: right7;}
-.option8{grid-area: right8;}
-.option9{grid-area: right9;}
-.option10{grid-area: right10;}
-.option11{grid-area: right11;}
+#option1{grid-area: right1;}
+#option2{grid-area: right2;}
+#option3{grid-area: right3;}
+#option4{grid-area: right4;}
+#option5{grid-area: right5;}
+#option6{grid-area: right6;}
+#option7{grid-area: right7;}
+#option8{grid-area: right8;}
+#option9{grid-area: right9;}
+#option10{grid-area: right10;}
+#option11{grid-area: right11;}
 
+.options.active {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
 .SCORE{
   grid-area: score;
   font-family: 'Times New Roman', Times, serif;
