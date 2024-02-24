@@ -12,6 +12,20 @@
   width: 800px;
   justify-items: center; /* horizontally center the items */
   align-items: center; /* vertically center the items */
+  @media only screen and (max-width: 600px) {
+    width: 100%; /* Adjust width to fill the screen */
+    grid-template-areas:
+      'score right2'
+      'right3 right1'
+      'board board'
+      'board board'
+      'board board'
+      'right4 right5'
+      'right7 right6'
+      'right8 right9'
+      'right10 right11'
+      ;
+  }
 }
 .playboard{ grid-area: board;}
 .option1{grid-area: right1;}
