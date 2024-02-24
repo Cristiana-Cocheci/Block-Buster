@@ -9,7 +9,7 @@ interface BlocksProps {
 
 class Square extends React.Component<BlocksProps>{
   handleOnClick = () => {
-    this.props.changeOnClick("square");
+    this.props.changeOnClick("Square");
   }
 
   getTiles() {

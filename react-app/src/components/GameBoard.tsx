@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import Tile from './Tile'
-import './board.css'
+import './gameboard.css'
 import Blocks from './Blocks'
 
-interface BoardProps {
+interface GameBoardProps {
   rows: number;
   cols: number; 
   size: string;
@@ -11,12 +11,15 @@ interface BoardProps {
 }
 
 
-class Board extends React.Component<BoardProps>{
+class GameBoard extends React.Component<GameBoardProps>{
   state = {
     colors: Array.from({ length: this.props.rows * this.props.cols }, () => "#edede9"),
     blocks: Array.from({ length: this.props.rows * this.props.cols }, ()=>false),
     selectedBlock: 'none',
-    score: 0
+    score: 0,
+    partialWin: 1,
+    currentBlocks: [],
+    currentNames: []
   };
 
   changeBlock = (newValue: string) => {
@@ -94,14 +97,20 @@ class Board extends React.Component<BoardProps>{
   handleTileClick(index: number){
     const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#491a74","#b4418e", "#d94a8c"];
     
-    const { colors, blocks, selectedBlock, score } = this.state;
+    const { colors, blocks, selectedBlock, score, currentBlocks, currentNames } = this.state;
     let newColors = [...colors];
     let newBlocks = [... blocks];
-    let possibleWinRows : number[] = [];
+    let newCurrentBlocks = [... currentBlocks];
+    let newCurrentNames : string[] = [... currentNames];
+    let possibleWinRows : number[] =[];
     let possibleWinCols : number[] =[];
     switch(selectedBlock){
       case 'none': newColors =  [...colors]; break;
       case 'Square' : (()=>{
+                      let currentBlockIndex = newCurrentNames.indexOf("Square");
+                      if(currentBlockIndex!= -1){
+                        newCurrentBlocks.splice(currentBlockIndex, 1);
+                        newCurrentNames.splice(currentBlockIndex, 1);
                       const indexes = [index, index+1, index+this.props.cols, index+this.props.cols+1];
                       if(index%this.props.cols<this.props.cols-1 
                         && index/this.props.rows<this.props.rows-1
@@ -115,8 +124,12 @@ class Board extends React.Component<BoardProps>{
                           newBlocks[indexes[i]] = true;
                         }
                         
-                      }})(); break;
+                      }}})(); break;
       case 'BigSquare' : (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("BigSquare");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                         const indexes = [index, index+1, index+2, index+this.props.cols, index+this.props.cols+1, index+this.props.cols+2
                         , index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
                         if(index%this.props.cols<this.props.cols-2 
@@ -131,8 +144,12 @@ class Board extends React.Component<BoardProps>{
                             newBlocks[indexes[i]] = true;
                           }
                           
-                        }})(); break;
+                        }}})(); break;
       case 'BigV' : (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("BigV");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                           const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols-1, index+2*this.props.cols-2];
                           if(index%this.props.cols<this.props.cols &&index%this.props.cols>1 
                             && index/this.props.rows<this.props.rows-2
@@ -146,8 +163,12 @@ class Board extends React.Component<BoardProps>{
                               newBlocks[indexes[i]] = true;
                             }
                             
-                          }})(); break;
+                          }}})(); break;
       case 'BigV2' : (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("BigV2");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                             const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
                             if(index%this.props.cols<this.props.cols-2 
                               && index/this.props.rows<this.props.rows-2
@@ -161,8 +182,12 @@ class Board extends React.Component<BoardProps>{
                                 newBlocks[indexes[i]] = true;
                               }
                               
-                            }})(); break;
+                            }}})(); break;
       case 'VBlock': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("VBlock");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
         const indexes = [index, index+1, index+this.props.cols];
         if(index%this.props.cols<this.props.cols-1 
           && index/this.props.rows<this.props.rows-1 
@@ -175,8 +200,12 @@ class Board extends React.Component<BoardProps>{
             newColors[indexes[i]]=mycolors[2];
             newBlocks[indexes[i]] = true;
           }
-          }})(); break;
+          }}})(); break;
       case 'VBlock2': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("VBlock2");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
             const indexes = [index, index+this.props.cols, index+this.props.cols-1];
             if(index%this.props.cols<this.props.cols
               && index/this.props.rows<this.props.rows-1 
@@ -189,8 +218,12 @@ class Board extends React.Component<BoardProps>{
                 newColors[indexes[i]]=mycolors[6];
                 newBlocks[indexes[i]] = true;
               }
-              }})(); break;
+              }}})(); break;
       case 'LBlock': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("LBlock");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
             const indexes = [index, index+1, index+2, index+this.props.cols+2];
             if(index%this.props.cols<this.props.cols-2 && 
                 index/this.props.rows<this.props.rows-1 &&
@@ -203,9 +236,13 @@ class Board extends React.Component<BoardProps>{
                 newColors[indexes[i]]=mycolors[1];
                 newBlocks[indexes[i]] = true;
               }
-              }})(); break;
+              }}})(); break;
               
       case 'Vline': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("VLine");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
         const indexes = [index, index+1, index+2, index+3, index+4];
         if(index%this.props.cols<this.props.cols-4 
           && this.is_free(indexes)){
@@ -215,8 +252,12 @@ class Board extends React.Component<BoardProps>{
             newColors[indexes[i]]=mycolors[3];
             newBlocks[indexes[i]] = true;
           }
-          }})(); break;
+          }}})(); break;
       case 'HLine': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("HLine");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
             const indexes = [index, index+this.props.cols*4, index+this.props.cols*3, index+this.props.cols*2, index+this.props.cols];
             if(index/this.props.rows<this.props.rows-4 
               && this.is_free(indexes)){
@@ -227,8 +268,12 @@ class Board extends React.Component<BoardProps>{
                 newColors[indexes[i]]=mycolors[5];
                 newBlocks[indexes[i]] = true;
               }
-              }})(); break;
+              }}})(); break;
       case 'TBlock': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("TBlock");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
         const indexes = [index, index+this.props.cols+1,  index+this.props.cols-1,  index+this.props.cols];
         if(index%this.props.cols<this.props.cols-1 && 
             index/this.props.rows<this.props.rows-1 &&
@@ -242,8 +287,12 @@ class Board extends React.Component<BoardProps>{
                 newColors[indexes[i]]=mycolors[4];
                 newBlocks[indexes[i]] = true;
               }
-              }})(); break;
+              }}})(); break;
        case 'TBlock2': (()=>{
+        let currentBlockIndex = newCurrentNames.indexOf("TBlock2");
+        if(currentBlockIndex!= -1){
+          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
           const indexes = [index, index+this.props.cols-1,  index+this.props.cols*2,  index+this.props.cols];
           if(index%this.props.cols<this.props.cols && 
                 index/this.props.rows<this.props.rows-1 &&
@@ -257,19 +306,23 @@ class Board extends React.Component<BoardProps>{
                         newColors[indexes[i]]=mycolors[7];
                         newBlocks[indexes[i]] = true;
                       }
-          }})(); break;
+          }}})(); break;
     }
     
-    this.generateBoard();
+    this.generateGameBoard();
 
     let newScore = score;
     newScore += this.callForRows(newBlocks, newColors, possibleWinRows);
     newScore += this.callForCols(newBlocks, newColors, possibleWinCols);
     console.log(newScore);
-    this.setState({ colors: newColors, blocks: newBlocks, score:newScore });
+    let newPartialWin = 0;
+    if(0 == newCurrentBlocks.length){
+      newPartialWin=1;
+    }
+    this.setState({ colors: newColors, blocks: newBlocks, score:newScore, currentBlocks:newCurrentBlocks, currentNames:newCurrentNames, partialWin: newPartialWin });
     
   }
-  generateBoard = () => {
+  generateGameBoard = () => {
     const s = this.props.size;
     const matrix = [];
     for(let i=0; i < this.props.rows; i++){
@@ -285,29 +338,43 @@ class Board extends React.Component<BoardProps>{
     }
     return matrix;
   };
+  getBlocksArray(no:number){
+    let arr : string[] =  ["Square","LBlock","VBlock","VLine","TBlock","HLine","VBlock2","TBlock2","BigSquare","BigV","BigV2"];
+    let blcs = [];
+    let names = [];
+    for(let i=0;i<no;i++){
+      let index = Math.floor((Math.random()*100))%arr.length;
+      let cn = "option" + i.toString();
+      blcs.push( <div className={cn}>{<Blocks blockType={arr[index]} size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>);
+      names.push(arr[index]);
+    }
+    const pair ={blocks: blcs, names: names};
+    return pair;
+  }
+  playGame(){
+    const { partialWin } = this.state;
+    if(partialWin == 1){
+      let {blocks, names} = this.getBlocksArray(3);
+      this.setState({partialWin : 0, currentBlocks : blocks, currentNames: names});
+    }
+  }
+  getCurrentBlocks(){
+    this.playGame();
+    const { currentBlocks } = this.state;
+    return currentBlocks;
+  }
   render(){
   return(
-    <div className='wholeboard'>
-      <div className='playboard'
+    <div className='wholeGameBoard'>
+      <div className='playGameBoard'
       style={{ display: 'grid', gridTemplateColumns: `repeat(${this.props.rows}, ${this.props.size})` }}>
-      {this.generateBoard()}
+      {this.generateGameBoard()}
       </div>
-      
-      <div className='option1'>{<Blocks blockType="Square" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option2'>{<Blocks blockType="VBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option3'>{<Blocks blockType="LBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option4'>{<Blocks blockType="VLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div>
-      <div className='option5'>{<Blocks blockType="TBlock" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option6'>{<Blocks blockType="HLine" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option7'>{<Blocks blockType="VBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option8'>{<Blocks blockType="TBlock2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option9'>{<Blocks blockType="BigSquare" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option10'>{<Blocks blockType="BigV" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
-      <div className='option11'>{<Blocks blockType="BigV2" size={this.props.size} changeBlockOnClick = {this.changeBlock}/>}</div> 
+      {this.getCurrentBlocks()}
       
       <div className='SCORE'>Score: {this.state.score}</div>
   </div>
   )
   }
 }
-export default Board
+export default GameBoard

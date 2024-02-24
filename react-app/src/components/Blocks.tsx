@@ -36,7 +36,7 @@ class Blocks extends React.Component<BlocksProps>{
         case "BigSquare":  return <BigSquare size = {this.props.size} color={mycolors[8]} changeOnClick={this.props.changeBlockOnClick}/>;
         case "BigV":  return <BigV size = {this.props.size} color={mycolors[9]} changeOnClick={this.props.changeBlockOnClick}/>;
         case "BigV2":  return <BigV2 size = {this.props.size} color={mycolors[10]} changeOnClick={this.props.changeBlockOnClick}/>;
-
+// ["Square","LBlock","VBlock","VLine","TBlock","HLine","VBlock2","TBlock2","BigSquare","BigV","BigV2"]
         default:      return <h1>No block match</h1>
       }
     }

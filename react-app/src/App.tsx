@@ -1,14 +1,29 @@
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import Board from './components/Board'
+import GameBoard from './components/GameBoard'
 
 function App() {
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleSelectChange = (event: { target: { value: SetStateAction<string> } }) => {
+    setSelectedOption(event.target.value);
+  };
   return (
     <div className='App'>
-      <div>Hello world!</div>
+      <select value={selectedOption} onChange={handleSelectChange}>
+        <option value="intro">Rules</option>
+        <option value="option1">Creative Mode</option>
+        <option value="option2">Adventure Mode</option>
+      </select>
       <div>
-        <Board rows={10} cols={10} size="5vh" defaultScore={10}/>
+      {selectedOption === 'intro' && <div>Hello World!</div>}
+
+      {selectedOption === 'option1' && <Board rows={10} cols={10} size="5vh" defaultScore={10}/>}
+      {selectedOption === 'option2' && <GameBoard rows={10} cols={10} size="5vh" defaultScore={10}/>}
+
+
       </div>
     </div>
   )
