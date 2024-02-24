@@ -153,7 +153,8 @@ class Board extends React.Component<BoardProps>{
                               && index/this.props.rows<this.props.rows-2
                               && this.is_free(indexes)){
                                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
-                                possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
+                                possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
+
                                 console.log(possibleWinCols);
                                 console.log(possibleWinRows);
                               for(let i=0;i<indexes.length;i++){

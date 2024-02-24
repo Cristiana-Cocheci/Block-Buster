@@ -109,12 +109,12 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'Square' : (()=>{
                       let currentBlockIndex = newCurrentNames.indexOf("Square");
                       if(currentBlockIndex!= -1){
-                        newCurrentBlocks.splice(currentBlockIndex, 1);
-                        newCurrentNames.splice(currentBlockIndex, 1);
                       const indexes = [index, index+1, index+this.props.cols, index+this.props.cols+1];
                       if(index%this.props.cols<this.props.cols-1 
                         && index/this.props.rows<this.props.rows-1
                         && this.is_free(indexes)){
+                          newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                           possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
                           possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
                           console.log(possibleWinCols);
@@ -128,13 +128,13 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'BigSquare' : (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("BigSquare");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
                         const indexes = [index, index+1, index+2, index+this.props.cols, index+this.props.cols+1, index+this.props.cols+2
                         , index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
                         if(index%this.props.cols<this.props.cols-2 
                           && index/this.props.rows<this.props.rows-2
                           && this.is_free(indexes)){
+                            newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                             possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                             possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
                             console.log(possibleWinCols);
@@ -148,12 +148,12 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'BigV' : (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("BigV");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
                           const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols-1, index+2*this.props.cols-2];
                           if(index%this.props.cols<this.props.cols &&index%this.props.cols>1 
                             && index/this.props.rows<this.props.rows-2
                             && this.is_free(indexes)){
+                              newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                               possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                               possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
                               console.log(possibleWinCols);
@@ -167,14 +167,14 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'BigV2' : (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("BigV2");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
                             const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
                             if(index%this.props.cols<this.props.cols-2 
                               && index/this.props.rows<this.props.rows-2
                               && this.is_free(indexes)){
+                                newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
-                                possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
+                                possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
                                 console.log(possibleWinCols);
                                 console.log(possibleWinRows);
                               for(let i=0;i<indexes.length;i++){
@@ -186,12 +186,12 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'VBlock': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("VBlock");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
         const indexes = [index, index+1, index+this.props.cols];
         if(index%this.props.cols<this.props.cols-1 
           && index/this.props.rows<this.props.rows-1 
           && this.is_free(indexes)){
+            newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
             possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
             possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
             console.log(possibleWinCols);
@@ -204,12 +204,12 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'VBlock2': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("VBlock2");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
             const indexes = [index, index+this.props.cols, index+this.props.cols-1];
             if(index%this.props.cols<this.props.cols
               && index/this.props.rows<this.props.rows-1 
               && this.is_free(indexes)){
+                newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
                 possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
                 console.log(possibleWinCols);
@@ -222,12 +222,12 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'LBlock': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("LBlock");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
             const indexes = [index, index+1, index+2, index+this.props.cols+2];
             if(index%this.props.cols<this.props.cols-2 && 
                 index/this.props.rows<this.props.rows-1 &&
                this.is_free(indexes)){
+                newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
                 possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
                 console.log(possibleWinCols);
@@ -241,11 +241,11 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'Vline': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("VLine");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
         const indexes = [index, index+1, index+2, index+3, index+4];
         if(index%this.props.cols<this.props.cols-4 
           && this.is_free(indexes)){
+            newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
             possibleWinRows = [Math.floor(index/ this.props.cols)];
             possibleWinCols = [index%this.props.rows,(index+1)% this.props.rows, (index+2)% this.props.rows,(index+3)% this.props.rows, (index+4)% this.props.rows];
           for(let i=0;i<indexes.length;i++){
@@ -256,11 +256,11 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'HLine': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("HLine");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
             const indexes = [index, index+this.props.cols*4, index+this.props.cols*3, index+this.props.cols*2, index+this.props.cols];
             if(index/this.props.rows<this.props.rows-4 
               && this.is_free(indexes)){
+                newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols),Math.floor((index+2*this.props.cols)/ this.props.cols),Math.floor((index+3*this.props.cols)/ this.props.cols),Math.floor((index+4*this.props.cols)/ this.props.cols)];
                 possibleWinCols = [index%this.props.rows];
                 console.log(possibleWinRows);
@@ -272,13 +272,14 @@ class GameBoard extends React.Component<GameBoardProps>{
       case 'TBlock': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("TBlock");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
+          
         const indexes = [index, index+this.props.cols+1,  index+this.props.cols-1,  index+this.props.cols];
         if(index%this.props.cols<this.props.cols-1 && 
             index/this.props.rows<this.props.rows-1 &&
             index/this.props.rows>0 &&
             this.is_free(indexes)){
+              newCurrentBlocks.splice(currentBlockIndex, 1);
+          newCurrentNames.splice(currentBlockIndex, 1);
               possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
               possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
               console.log(possibleWinCols);
@@ -291,13 +292,14 @@ class GameBoard extends React.Component<GameBoardProps>{
        case 'TBlock2': (()=>{
         let currentBlockIndex = newCurrentNames.indexOf("TBlock2");
         if(currentBlockIndex!= -1){
-          newCurrentBlocks.splice(currentBlockIndex, 1);
-          newCurrentNames.splice(currentBlockIndex, 1);
+          
           const indexes = [index, index+this.props.cols-1,  index+this.props.cols*2,  index+this.props.cols];
           if(index%this.props.cols<this.props.cols && 
                 index/this.props.rows<this.props.rows-1 &&
                 index/this.props.rows>0 &&
                     this.is_free(indexes)){
+                      newCurrentBlocks.splice(currentBlockIndex, 1);
+                      newCurrentNames.splice(currentBlockIndex, 1);
                       possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                       possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
                       console.log(possibleWinCols);
