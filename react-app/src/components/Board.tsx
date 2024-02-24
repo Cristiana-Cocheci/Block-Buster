@@ -92,7 +92,7 @@ class Board extends React.Component<BoardProps>{
 
   }
   handleTileClick(index: number){
-    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#7b2cbf", "#b5179e", "#ef476f"];
+    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#491a74","#b4418e", "#d94a8c"];
     
     const { colors, blocks, selectedBlock, score } = this.state;
     let newColors = [...colors];

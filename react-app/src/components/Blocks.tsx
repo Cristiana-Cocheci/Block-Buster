@@ -18,7 +18,7 @@ interface BlocksProps {
 }
 class Blocks extends React.Component<BlocksProps>{
   render(){
-    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#7b2cbf", "#b5179e", "#ef476f"];
+    const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#491a74", "#b4418e", "#d94a8c"];
     
     // const mycolors= ["#ff595e","#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
     //const r = (Math.floor(Math.random() * 100) + 1)%5;

@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  justify-items: center; /* horizontally center the items */
+  align-items: center; /* vertically center the items */
 }
 
 .logo {

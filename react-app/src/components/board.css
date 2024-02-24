@@ -9,6 +9,9 @@
   grid-gap: 10px;
   background-color: #0a1823;
   padding: 10px;
+  width: 800px;
+  justify-items: center; /* horizontally center the items */
+  align-items: center; /* vertically center the items */
 }
 .playboard{ grid-area: board;}
 .option1{grid-area: right1;}
