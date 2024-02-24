@@ -119,8 +119,8 @@ class Board extends React.Component<BoardProps>{
       case 'BigSquare' : (()=>{
                         const indexes = [index, index+1, index+2, index+this.props.cols, index+this.props.cols+1, index+this.props.cols+2
                         , index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
-                        if(index%this.props.cols<this.props.cols-1 
-                          && index/this.props.rows<this.props.rows-1
+                        if(index%this.props.cols<this.props.cols-2 
+                          && index/this.props.rows<this.props.rows-2
                           && this.is_free(indexes)){
                             possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                             possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
@@ -134,8 +134,8 @@ class Board extends React.Component<BoardProps>{
                         }})(); break;
       case 'BigV' : (()=>{
                           const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols-1, index+2*this.props.cols-2];
-                          if(index%this.props.cols<this.props.cols-1 
-                            && index/this.props.rows<this.props.rows-1
+                          if(index%this.props.cols<this.props.cols &&index%this.props.cols>1 
+                            && index/this.props.rows<this.props.rows-2
                             && this.is_free(indexes)){
                               possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                               possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
@@ -149,8 +149,8 @@ class Board extends React.Component<BoardProps>{
                           }})(); break;
       case 'BigV2' : (()=>{
                             const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
-                            if(index%this.props.cols<this.props.cols-1 
-                              && index/this.props.rows<this.props.rows-1
+                            if(index%this.props.cols<this.props.cols-2 
+                              && index/this.props.rows<this.props.rows-2
                               && this.is_free(indexes)){
                                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                                 possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
