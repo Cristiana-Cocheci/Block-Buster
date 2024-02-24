@@ -20,8 +20,8 @@ function App() {
       <div>
       {selectedOption === 'intro' && <div>Hello World!</div>}
 
-      {selectedOption === 'option1' && <Board rows={10} cols={10} size="5vh" defaultScore={10}/>}
-      {selectedOption === 'option2' && <GameBoard rows={10} cols={10} size="5vh" defaultScore={10}/>}
+      {selectedOption === 'option1' && <Board rows={8} cols={8} size="5vh" defaultScore={10}/>}
+      {selectedOption === 'option2' && <GameBoard rows={8} cols={8} size="5vh" defaultScore={10}/>}
 
 
       </div>

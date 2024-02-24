@@ -11,7 +11,17 @@
   width: 800px;
   justify-items: center; /* horizontally center the items */
   align-items: center; /* vertically center the items */
-}
+
+@media only screen and (max-width: 600px) {
+  width: 100%; /* Adjust width to fill the screen */
+  grid-template-areas:
+    
+    'board board'
+    'score right2'
+    'right3 right1'
+    ;
+}}
+
 .playGameBoard{ grid-area: board;}
 .option1{grid-area: right1;}
 .option2{grid-area: right2;}
