@@ -38,7 +38,7 @@ class GameBoard extends React.Component<GameBoardProps>{
 
   rowIsFull(row: number, x: boolean[]) {
     for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
-      // console.log(i);
+      console.log(row, i, x[i]);
       if (!x[i]) {
         return false;
       }
@@ -48,6 +48,7 @@ class GameBoard extends React.Component<GameBoardProps>{
   colIsFull(col: number, x: boolean[]) {
     
     for (let i = 0; i < this.props.rows; i++) {
+      console.log(col, i, x[i]);
       let aux = i* this.props.rows+ col;
       //console.log(aux);
       if (!x[aux]) {
@@ -57,41 +58,59 @@ class GameBoard extends React.Component<GameBoardProps>{
     return true;
   }
   
-  callForRows(newBlocks: boolean[], newColors: string[],  y: number[]){
-    let cntScor=0;
+  emptyRows(newBlocks: boolean[], newColors: string[],  y: number[]){
     for(let i=0;i<y.length;i++){
-      if(this.rowIsFull(y[i], newBlocks)){
-        console.log(y[i], "rowIsfull");
         //empty the row
         let row = y[i];
-        cntScor+= this.props.defaultScore;
+        
         for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
           newColors[i]="#edede9";
           newBlocks[i]=false;
           
-        }
+        
       }
     }
-    return cntScor;
+  }
+  callForRows(newBlocks: boolean[],  y: number[]){
+    let cntScor2=0;
+    let actrows = [];
+    for(let i=0;i<y.length;i++){
+      if(this.rowIsFull(y[i], newBlocks)){
+        console.log(y[i], "rowIsfull");
+        cntScor2+= this.props.defaultScore;
+        actrows.push(y[i]);
+      }
+      
+    }
+    return {cntScor2, actrows};
   }
   
-  callForCols(newBlocks: boolean[], newColors: string[],  y: number[]){
-    let cntScor=0;
+  emptyCols(newBlocks: boolean[], newColors: string[],  y: number[]){
     for(let i=0;i<y.length;i++){
-      if(this.colIsFull(y[i], newBlocks)){
-        console.log(y[i], "colIsfull");
         //empty the column
         let col = y[i];
-        cntScor+= this.props.defaultScore;
+        
         for (let j = 0; j < this.props.rows; j++) {
           let aux = j* this.props.rows+ col;
           //console.log(aux);
           newColors[aux]="#edede9";
           newBlocks[aux]=false;
-        }
+        
       }
     }
-    return cntScor;
+  }
+
+  callForCols(newBlocks: boolean[],  y: number[]){
+    let cntScor1 = 0;
+    let actcols = [];
+    for(let i=0;i<y.length;i++){
+      if(this.colIsFull(y[i], newBlocks)){
+        console.log(y[i], "colIsfull");
+        actcols.push(y[i]);
+        cntScor1+= this.props.defaultScore;
+      }
+    }
+    return {cntScor1,actcols};
 
   }
   handleTileClick(index: number){
@@ -281,7 +300,7 @@ class GameBoard extends React.Component<GameBoardProps>{
               newCurrentBlocks.splice(currentBlockIndex, 1);
           newCurrentNames.splice(currentBlockIndex, 1);
               possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
-              possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
+              possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index-1)% this.props.rows];
               console.log(possibleWinCols);
               console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
@@ -314,9 +333,15 @@ class GameBoard extends React.Component<GameBoardProps>{
     this.generateGameBoard();
 
     let newScore = score;
-    newScore += this.callForRows(newBlocks, newColors, possibleWinRows);
-    newScore += this.callForCols(newBlocks, newColors, possibleWinCols);
-    console.log(newScore);
+    let {cntScor1, actcols} = this.callForCols(newBlocks, possibleWinCols);
+    let {cntScor2, actrows} = this.callForRows(newBlocks, possibleWinCols);
+    this.emptyCols(newBlocks, newColors, actcols);
+    this.emptyRows(newBlocks, newColors, actrows);
+    console.log("Actcols: ",actcols);
+    console.log("Actrows: ",actrows);
+    newScore += cntScor2;
+    newScore += cntScor1;
+    
     let newPartialWin = 0;
     if(0 == newCurrentBlocks.length){
       newPartialWin=1;

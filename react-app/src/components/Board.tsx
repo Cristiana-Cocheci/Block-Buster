@@ -35,7 +35,7 @@ class Board extends React.Component<BoardProps>{
 
   rowIsFull(row: number, x: boolean[]) {
     for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
-      // console.log(i);
+      console.log(i, x[i]);
       if (!x[i]) {
         return false;
       }
@@ -54,41 +54,59 @@ class Board extends React.Component<BoardProps>{
     return true;
   }
   
-  callForRows(newBlocks: boolean[], newColors: string[],  y: number[]){
-    let cntScor=0;
+  emptyRows(newBlocks: boolean[], newColors: string[],  y: number[]){
     for(let i=0;i<y.length;i++){
-      if(this.rowIsFull(y[i], newBlocks)){
-        console.log(y[i], "rowIsfull");
         //empty the row
         let row = y[i];
-        cntScor+= this.props.defaultScore;
+        
         for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
           newColors[i]="#edede9";
           newBlocks[i]=false;
           
-        }
+        
       }
     }
-    return cntScor;
+  }
+  callForRows(newBlocks: boolean[],  y: number[]){
+    let cntScor2=0;
+    let actrows = [];
+    for(let i=0;i<y.length;i++){
+      if(this.rowIsFull(y[i], newBlocks)){
+        console.log(y[i], "rowIsfull");
+        cntScor2+= this.props.defaultScore;
+        actrows.push(y[i]);
+      }
+      
+    }
+    return {cntScor2, actrows};
   }
   
-  callForCols(newBlocks: boolean[], newColors: string[],  y: number[]){
-    let cntScor=0;
+  emptyCols(newBlocks: boolean[], newColors: string[],  y: number[]){
     for(let i=0;i<y.length;i++){
-      if(this.colIsFull(y[i], newBlocks)){
-        console.log(y[i], "colIsfull");
         //empty the column
         let col = y[i];
-        cntScor+= this.props.defaultScore;
+        
         for (let j = 0; j < this.props.rows; j++) {
           let aux = j* this.props.rows+ col;
           //console.log(aux);
           newColors[aux]="#edede9";
           newBlocks[aux]=false;
-        }
+        
       }
     }
-    return cntScor;
+  }
+
+  callForCols(newBlocks: boolean[],  y: number[]){
+    let cntScor1 = 0;
+    let actcols = [];
+    for(let i=0;i<y.length;i++){
+      if(this.colIsFull(y[i], newBlocks)){
+        console.log(y[i], "colIsfull");
+        actcols.push(y[i]);
+        cntScor1+= this.props.defaultScore;
+      }
+    }
+    return {cntScor1,actcols};
 
   }
   handleTileClick(index: number){
@@ -264,9 +282,14 @@ class Board extends React.Component<BoardProps>{
     this.generateBoard();
 
     let newScore = score;
-    newScore += this.callForRows(newBlocks, newColors, possibleWinRows);
-    newScore += this.callForCols(newBlocks, newColors, possibleWinCols);
-    console.log(newScore);
+    let {cntScor1, actcols} = this.callForCols(newBlocks, possibleWinCols);
+    let {cntScor2, actrows} = this.callForRows(newBlocks, possibleWinCols);
+    this.emptyCols(newBlocks, newColors, actcols);
+    this.emptyRows(newBlocks, newColors, actrows);
+    console.log("Actcols: ",actcols);
+    console.log("Actrows: ",actrows);
+    newScore += cntScor2;
+    newScore += cntScor1;
     this.setState({ colors: newColors, blocks: newBlocks, score:newScore });
     
   }
