@@ -113,6 +113,32 @@ class GameBoard extends React.Component<GameBoardProps>{
     return {cntScor1,actcols};
 
   }
+  checkBoardRows(newBlocks: boolean[]){
+    let cntScor2=0;
+    let actrows = [];
+    for(let i=0;i<this.props.rows;i++){
+      if(this.rowIsFull(i, newBlocks)){
+        console.log(i, "rowIsfull");
+        cntScor2+= this.props.defaultScore;
+        actrows.push(i);
+      }
+      
+    }
+    return {cntScor2, actrows};
+  }
+  
+  checkBoardCols(newBlocks: boolean[]){
+    let cntScor1 = 0;
+    let actcols = [];
+    for(let i=0;i<this.props.cols;i++){
+      if(this.colIsFull(i, newBlocks)){
+        console.log(i, "colIsfull");
+        actcols.push(i);
+        cntScor1+= this.props.defaultScore;
+      }
+    }
+    return {cntScor1,actcols};
+  }
   handleTileClick(index: number){
     const mycolors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#0a9396", "#005f73", "#3a0ca3", "#491a74","#b4418e", "#d94a8c"];
     
@@ -333,8 +359,8 @@ class GameBoard extends React.Component<GameBoardProps>{
     this.generateGameBoard();
 
     let newScore = score;
-    let {cntScor1, actcols} = this.callForCols(newBlocks, possibleWinCols);
-    let {cntScor2, actrows} = this.callForRows(newBlocks, possibleWinCols);
+    let {cntScor1, actcols} = this.checkBoardCols(newBlocks);
+    let {cntScor2, actrows} = this.checkBoardRows(newBlocks);
     this.emptyCols(newBlocks, newColors, actcols);
     this.emptyRows(newBlocks, newColors, actrows);
     console.log("Actcols: ",actcols);

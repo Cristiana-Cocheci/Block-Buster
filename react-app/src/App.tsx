@@ -18,7 +18,7 @@ function App() {
         <option value="option2">Adventure Mode</option>
       </select>
       <div>
-      {selectedOption === 'intro' && <div>Hello World! ou have a Board of size 8x8, and multiple Blocks of various shapes and sizes. The goal is to fit in as many as possible, and win points along the way. Once a row or column is complete it is reseted to empty, and you win the points for it!
+      {selectedOption === 'intro' && <div>Hello World! You have a Board of size 8x8, and multiple Blocks of various shapes and sizes. The goal is to fit in as many as possible, and win points along the way. Once a row or column is complete it is reseted to empty, and you win the points for it!
 
 On Creative mode you choose your own Blocks: complete freedom !
 
