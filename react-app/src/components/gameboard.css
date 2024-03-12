@@ -13,7 +13,7 @@
   justify-items: center; /* horizontally center the items */
   align-items: center; /* vertically center the items */
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   width: 100%; /* Adjust width to fill the screen */
   grid-template-areas:
     

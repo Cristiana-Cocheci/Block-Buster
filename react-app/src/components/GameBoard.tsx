@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Tile from './Tile'
 import './gameboard.css'
 import Blocks from './Blocks'
+import PopUp from './PopUp';
 
 interface GameBoardProps {
   rows: number;
@@ -19,7 +20,8 @@ class GameBoard extends React.Component<GameBoardProps>{
     score: 0,
     partialWin: 1,
     currentBlocks: [],
-    currentNames: []
+    currentNames: [],
+    showPopUp: false
   };
 
   changeBlock = (newValue: string) => {
@@ -38,7 +40,7 @@ class GameBoard extends React.Component<GameBoardProps>{
 
   rowIsFull(row: number, x: boolean[]) {
     for (let i = row*this.props.cols; i < (1+row)*this.props.cols; i++) {
-      console.log(row, i, x[i]);
+      // console.log(row, i, x[i]);
       if (!x[i]) {
         return false;
       }
@@ -48,7 +50,7 @@ class GameBoard extends React.Component<GameBoardProps>{
   colIsFull(col: number, x: boolean[]) {
     
     for (let i = 0; i < this.props.rows; i++) {
-      console.log(col, i, x[i]);
+      // console.log(col, i, x[i]);
       let aux = i* this.props.rows+ col;
       //console.log(aux);
       if (!x[aux]) {
@@ -76,7 +78,7 @@ class GameBoard extends React.Component<GameBoardProps>{
     let actrows = [];
     for(let i=0;i<y.length;i++){
       if(this.rowIsFull(y[i], newBlocks)){
-        console.log(y[i], "rowIsfull");
+        // console.log(y[i], "rowIsfull");
         cntScor2+= this.props.defaultScore;
         actrows.push(y[i]);
       }
@@ -105,7 +107,7 @@ class GameBoard extends React.Component<GameBoardProps>{
     let actcols = [];
     for(let i=0;i<y.length;i++){
       if(this.colIsFull(y[i], newBlocks)){
-        console.log(y[i], "colIsfull");
+        // console.log(y[i], "colIsfull");
         actcols.push(y[i]);
         cntScor1+= this.props.defaultScore;
       }
@@ -118,7 +120,7 @@ class GameBoard extends React.Component<GameBoardProps>{
     let actrows = [];
     for(let i=0;i<this.props.rows;i++){
       if(this.rowIsFull(i, newBlocks)){
-        console.log(i, "rowIsfull");
+        // console.log(i, "rowIsfull");
         cntScor2+= this.props.defaultScore;
         actrows.push(i);
       }
@@ -132,7 +134,7 @@ class GameBoard extends React.Component<GameBoardProps>{
     let actcols = [];
     for(let i=0;i<this.props.cols;i++){
       if(this.colIsFull(i, newBlocks)){
-        console.log(i, "colIsfull");
+        // console.log(i, "colIsfull");
         actcols.push(i);
         cntScor1+= this.props.defaultScore;
       }
@@ -162,8 +164,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                           possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
                           possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
-                          console.log(possibleWinCols);
-                          console.log(possibleWinRows);
+                          // console.log(possibleWinCols);
+                          // console.log(possibleWinRows);
                         for(let i=0;i<indexes.length;i++){
                           newColors[indexes[i]]=mycolors[0];
                           newBlocks[indexes[i]] = true;
@@ -182,8 +184,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                             possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                             possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
-                            console.log(possibleWinCols);
-                            console.log(possibleWinRows);
+                            // console.log(possibleWinCols);
+                            // console.log(possibleWinRows);
                           for(let i=0;i<indexes.length;i++){
                             newColors[indexes[i]]=mycolors[8];
                             newBlocks[indexes[i]] = true;
@@ -201,8 +203,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                               possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                               possibleWinCols = [index % this.props.rows, (index-1)% this.props.rows, (index-2)% this.props.rows];
-                              console.log(possibleWinCols);
-                              console.log(possibleWinRows);
+                              // console.log(possibleWinCols);
+                              // console.log(possibleWinRows);
                             for(let i=0;i<indexes.length;i++){
                               newColors[indexes[i]]=mycolors[9];
                               newBlocks[indexes[i]] = true;
@@ -220,8 +222,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                                 possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
-                                console.log(possibleWinCols);
-                                console.log(possibleWinRows);
+                                // console.log(possibleWinCols);
+                                // console.log(possibleWinRows);
                               for(let i=0;i<indexes.length;i++){
                                 newColors[indexes[i]]=mycolors[10];
                                 newBlocks[indexes[i]] = true;
@@ -239,8 +241,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
             possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
             possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
-            console.log(possibleWinCols);
-            console.log(possibleWinRows);
+            // console.log(possibleWinCols);
+            // console.log(possibleWinRows);
           for(let i=0;i<indexes.length;i++){
             newColors[indexes[i]]=mycolors[2];
             newBlocks[indexes[i]] = true;
@@ -257,8 +259,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
                 possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
-                console.log(possibleWinCols);
-                console.log(possibleWinRows);
+                // console.log(possibleWinCols);
+                // console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[6];
                 newBlocks[indexes[i]] = true;
@@ -275,8 +277,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
                 possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index+2)% this.props.rows];
-                console.log(possibleWinCols);
-                console.log(possibleWinRows);
+                // console.log(possibleWinCols);
+                // console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[1];
                 newBlocks[indexes[i]] = true;
@@ -308,7 +310,7 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
                 possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols),Math.floor((index+2*this.props.cols)/ this.props.cols),Math.floor((index+3*this.props.cols)/ this.props.cols),Math.floor((index+4*this.props.cols)/ this.props.cols)];
                 possibleWinCols = [index%this.props.rows];
-                console.log(possibleWinRows);
+                // console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[5];
                 newBlocks[indexes[i]] = true;
@@ -327,8 +329,8 @@ class GameBoard extends React.Component<GameBoardProps>{
           newCurrentNames.splice(currentBlockIndex, 1);
               possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols)];
               possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows, (index-1)% this.props.rows];
-              console.log(possibleWinCols);
-              console.log(possibleWinRows);
+              // console.log(possibleWinCols);
+              // console.log(possibleWinRows);
               for(let i=0;i<indexes.length;i++){
                 newColors[indexes[i]]=mycolors[4];
                 newBlocks[indexes[i]] = true;
@@ -347,8 +349,8 @@ class GameBoard extends React.Component<GameBoardProps>{
                       newCurrentNames.splice(currentBlockIndex, 1);
                       possibleWinRows = [Math.floor(index/ this.props.cols), Math.floor((index+this.props.cols)/ this.props.cols), Math.floor((index+2*this.props.cols)/ this.props.cols)];
                       possibleWinCols = [index % this.props.rows, (index+1)% this.props.rows];
-                      console.log(possibleWinCols);
-                      console.log(possibleWinRows);
+                      // console.log(possibleWinCols);
+                      // console.log(possibleWinRows);
                       for(let i=0;i<indexes.length;i++){
                         newColors[indexes[i]]=mycolors[7];
                         newBlocks[indexes[i]] = true;
@@ -363,8 +365,8 @@ class GameBoard extends React.Component<GameBoardProps>{
     let {cntScor2, actrows} = this.checkBoardRows(newBlocks);
     this.emptyCols(newBlocks, newColors, actcols);
     this.emptyRows(newBlocks, newColors, actrows);
-    console.log("Actcols: ",actcols);
-    console.log("Actrows: ",actrows);
+    // console.log("Actcols: ",actcols);
+    // console.log("Actrows: ",actrows);
     newScore += cntScor2;
     newScore += cntScor1;
     
@@ -373,7 +375,11 @@ class GameBoard extends React.Component<GameBoardProps>{
       newPartialWin=1;
     }
     this.setState({ colors: newColors, blocks: newBlocks, score:newScore, currentBlocks:newCurrentBlocks, currentNames:newCurrentNames, partialWin: newPartialWin });
-    
+    //console.log(this.checkLoss());
+    if (this.checkLoss()){
+      this.setState({showPopUp: true});
+      //alert("You lost! Try again?");
+    }
   }
   generateGameBoard = () => {
     const s = this.props.size;
@@ -411,10 +417,144 @@ class GameBoard extends React.Component<GameBoardProps>{
       this.setState({partialWin : 0, currentBlocks : blocks, currentNames: names});
     }
   }
+  blockFits(blockType: string){
+    // console.log(blockType);
+    //return true;
+    switch(blockType) {
+
+        case 'Square' : 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+            const indexes = [index, index+1, index+this.props.cols, index+this.props.cols+1];
+            if(index%this.props.cols<this.props.cols-1 
+              && index/this.props.rows<this.props.rows-1
+              && this.is_free(indexes)){
+                console.log(indexes);
+                return true;
+              }
+          }
+          return false;
+          
+        case 'BigSquare' : 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+            const indexes = [index, index+1, index+2, index+this.props.cols, index+this.props.cols+1, index+this.props.cols+2
+            , index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
+            if(index%this.props.cols<this.props.cols-2 
+              && index/this.props.rows<this.props.rows-2
+              && this.is_free(indexes)){
+                console.log(indexes);
+                return true;
+              
+            }}return false;
+        case 'BigV' : 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+              const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols-1, index+2*this.props.cols-2];
+              if(index%this.props.cols<this.props.cols &&index%this.props.cols>1 
+                && index/this.props.rows<this.props.rows-2
+                && this.is_free(indexes)){
+                  console.log(indexes);
+                  return true;
+                
+              }}return false;
+        case 'BigV2' : 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+                const indexes = [index, index+this.props.cols, index+2*this.props.cols, index+2*this.props.cols+1, index+2*this.props.cols+2];
+                if(index%this.props.cols<this.props.cols-2 
+                  && index/this.props.rows<this.props.rows-2
+                  && this.is_free(indexes)){
+                    console.log(indexes);
+                    return true;
+                  
+                }}return false;
+        case 'VBlock': 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+              const indexes = [index, index+1, index+this.props.cols];
+              if(index%this.props.cols<this.props.cols-1 
+              && index/this.props.rows<this.props.rows-1 
+              && this.is_free(indexes)){
+                console.log(indexes);
+                    return true;
+          }}return false;
+        case 'VBlock2': 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+              const indexes = [index, index+this.props.cols, index+this.props.cols-1];
+              if(index%this.props.cols<this.props.cols
+              && index/this.props.rows<this.props.rows-1 
+              && this.is_free(indexes)){
+                console.log(indexes);
+                  return true;
+              }}return false;
+        case 'LBlock': 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+            const indexes = [index, index+1, index+2, index+this.props.cols+2];
+            if(index%this.props.cols<this.props.cols-2 && 
+              index/this.props.rows<this.props.rows-1 &&
+            this.is_free(indexes)){
+              console.log(indexes);
+              return true;
+              }}return false; 
+
+        case 'VLine': 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+            const indexes = [index, index+1, index+2, index+3, index+4];
+            if(index%this.props.cols<this.props.cols-4 
+            && this.is_free(indexes)){
+              console.log(indexes);
+              return true;
+            }}return false;
+        case 'HLine':
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+            const indexes = [index, index+this.props.cols*4, index+this.props.cols*3, index+this.props.cols*2, index+this.props.cols];
+            if(index/this.props.rows<this.props.rows-4 
+            && this.is_free(indexes)){
+              console.log(indexes);
+              return true;
+              }}return false;
+        case 'TBlock':
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+
+            const indexes = [index, index+this.props.cols+1,  index+this.props.cols-1,  index+this.props.cols];
+            if(index%this.props.cols<this.props.cols-1 && 
+                index/this.props.rows<this.props.rows-1 &&
+                index/this.props.rows>0 &&
+                this.is_free(indexes)){
+                  console.log(indexes);
+                  return true;
+            }}
+            return false;
+        case 'TBlock2': 
+          for(let index = 0; index <this.props.cols*this.props.rows;index++){
+              const indexes = [index, index+this.props.cols-1,  index+this.props.cols*2,  index+this.props.cols];
+              if(index%this.props.cols<this.props.cols && 
+                index/this.props.rows<this.props.rows-1 &&
+                index/this.props.rows>0 &&
+                    this.is_free(indexes)){
+                      console.log(indexes);
+                return true;
+        }}return false;
+        default:
+            console.error("Invalid block type:", blockType);
+            return false;
+    }
+  }
+
+  checkLoss(){
+    const {currentNames} = this.state;
+    for(let i=0; i<currentNames.length;i++){
+      console.log(i,currentNames[i], this.blockFits(currentNames[i]));
+      if(!this.blockFits(currentNames[i])){
+        console.log("ai pierdut");
+        return true;
+      }
+    }
+    return false;
+  }
   getCurrentBlocks(){
     this.playGame();
     const { currentBlocks } = this.state;
     return currentBlocks;
+  }
+  closePopUp(){
+    this.setState({showPopUp: false});
   }
   render(){
   return(
@@ -424,8 +564,15 @@ class GameBoard extends React.Component<GameBoardProps>{
       {this.generateGameBoard()}
       </div>
       {this.getCurrentBlocks()}
-      
       <div className='SCORE'>Score: {this.state.score}</div>
+      {this.state.showPopUp && (
+        <PopUp
+          title="You Lost"
+          text="Think you can do better? Refresh the page and try again!"
+          // closePopUp={this.closePopUp}
+          // restartGame={this.closePopUp}
+        />
+      )}
   </div>
   )
   }
