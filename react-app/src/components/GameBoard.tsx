@@ -377,7 +377,9 @@ class GameBoard extends React.Component<GameBoardProps>{
     this.setState({ colors: newColors, blocks: newBlocks, score:newScore, currentBlocks:newCurrentBlocks, currentNames:newCurrentNames, partialWin: newPartialWin });
     //console.log(this.checkLoss());
     if (this.checkLoss()){
-      this.setState({showPopUp: true});
+      
+      setTimeout(() => {  this.setState({showPopUp: true}); }, 600);
+      
       //alert("You lost! Try again?");
     }
   }
